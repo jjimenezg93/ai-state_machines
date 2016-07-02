@@ -142,6 +142,7 @@
     <ClCompile Include="SM\action.cpp" />
     <ClCompile Include="SM\conditionand.cpp" />
     <ClCompile Include="SM\state.cpp" />
+    <ClCompile Include="SM\statemachine.cpp" />
     <ClCompile Include="SM\transition.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -168,6 +169,7 @@
     <ClInclude Include="SM\condition.h" />
     <ClInclude Include="SM\conditionand.h" />
     <ClInclude Include="SM\state.h" />
+    <ClInclude Include="SM\statemachine.h" />
     <ClInclude Include="SM\transition.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="steering.h" />

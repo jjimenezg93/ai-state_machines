@@ -17,5 +17,7 @@ bool Transition::CanTrigger() const {
 }
 
 State * Transition::Trigger() {
-	return new State();
+	m_triggerAction->Run();
+	m_targetState->OnEnter();
+	return m_targetState;
 }

@@ -41,6 +41,9 @@
     <ClCompile Include="SM\conditionand.cpp">
       <Filter>SM</Filter>
     </ClCompile>
+    <ClCompile Include="SM\statemachine.cpp">
+      <Filter>SM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
@@ -81,6 +84,9 @@
       <Filter>SM</Filter>
     </ClInclude>
     <ClInclude Include="SM\conditionand.h">
+      <Filter>SM</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\statemachine.h">
       <Filter>SM</Filter>
     </ClInclude>
   </ItemGroup>

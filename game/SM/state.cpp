@@ -6,10 +6,10 @@
 
 State::State() {}
 
-/*State::State(Action * enter, Action * update, Action * exit):
+State::State(Action * enter, Action * update, Action * exit):
 m_enterAction(enter), m_updateAction(update), m_exitAction(exit) {
 
-}*/
+}
 
 void State::OnEnter() {
 	m_enterAction->Run();

@@ -5,13 +5,11 @@
 
 class Action;
 class Transition;
-#include "action.h"
-#include "transition.h"
 
 class State {
 public:
 	State();
-	//State(Action * enter, Action * update, Action * exit);
+	State(Action * enter, Action * update, Action * exit);
 
 	void OnEnter();
 	void Update();
