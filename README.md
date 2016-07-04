@@ -1,2 +1,2 @@
-# ai-navmesh
-Project which reads .xml containing a navmesh geometry and then applies pathfinding over it
+# ai-state_machines
+Flexible State Machines system developed for AI subject from Master's in Games Programming.
