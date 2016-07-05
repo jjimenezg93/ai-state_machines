@@ -33,9 +33,4 @@ void SeekSteering::DrawDebug() {
 		static_cast<USVec2D>(GetCh()->GetLoc()) + mLastLinearAcc);
 
 	gfxDevice.SetPenColor(1.0f, 1.0f, 1.0f, 0.5f);
-
-	MOAIDraw::DrawPoint(GetCh()->GetParams().target_position);
-	MOAIDraw::DrawEllipseOutline(GetCh()->GetParams().target_position.mX,
-		GetCh()->GetParams().target_position.mY, GetCh()->GetParams().arrive_radius,
-		GetCh()->GetParams().arrive_radius, 64);
 }

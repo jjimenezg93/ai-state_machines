@@ -29,9 +29,6 @@
     <ClCompile Include="aligntomovement_steering.cpp" />
     <ClCompile Include="seek_steering.cpp" />
     <ClCompile Include="align_steering.cpp" />
-    <ClCompile Include="SM\action.cpp">
-      <Filter>SM</Filter>
-    </ClCompile>
     <ClCompile Include="SM\state.cpp">
       <Filter>SM</Filter>
     </ClCompile>
@@ -42,6 +39,15 @@
       <Filter>SM</Filter>
     </ClCompile>
     <ClCompile Include="SM\statemachine.cpp">
+      <Filter>SM</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\actionnone.cpp">
+      <Filter>SM</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\actionrandcolor.cpp">
+      <Filter>SM</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\conditionmoving.cpp">
       <Filter>SM</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,6 +93,15 @@
       <Filter>SM</Filter>
     </ClInclude>
     <ClInclude Include="SM\statemachine.h">
+      <Filter>SM</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\actionnone.h">
+      <Filter>SM</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\actionrandcolor.h">
+      <Filter>SM</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\conditionmoving.h">
       <Filter>SM</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include <vector>
 
 class Steering;
+class StateMachine;
 
 struct Accelerations {
 	Accelerations(): linearAcc(0, 0), angularAcc(0) {}
@@ -48,6 +49,8 @@ private:
 
 	std::vector<Steering *> mSteerings;
 	USVec2D mTarget;
+
+	StateMachine * mStateMachine;
 
 	// Lua configuration
 public:

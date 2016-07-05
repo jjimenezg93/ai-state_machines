@@ -17,13 +17,6 @@ gfxQuad:setUVRect(0, 0, 1, 1)
 prop = MOAIProp2D.new()
 prop:setDeck(gfxQuad)
 
-pathfinder = Pathfinder.new()
---pathfinder:setStartPosition(1, 1)
-pathfinder:initStartPosition(-10, -10)
---pathfinder:setStartPosition(6, 6)
-pathfinder:initEndPosition(126, -138)
-MOAIDrawDebug.insertEntity(pathfinder)
-
 entity = Character.new()
 -- Add prop to be the renderable for this character
 entity:setProp(prop, layer)
@@ -44,11 +37,11 @@ mouseX = 0
 mouseY = 0
 
 function onClick(down)
-  pathfinder:setStartPosition(mouseX, mouseY)
+  entity:setLoc(mouseX, mouseY)
 end
 
 function onRightClick(down)
-  pathfinder:setEndPosition(mouseX, mouseY)
+  entity:setTarget(mouseX, mouseY)
 end
 
 function pointerCallback(x, y)

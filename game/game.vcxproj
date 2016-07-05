@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,7 +27,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -139,8 +139,10 @@
     <ClCompile Include="pathfinding\pathfinder.cpp" />
     <ClCompile Include="pathfollowing_steering.cpp" />
     <ClCompile Include="seek_steering.cpp" />
-    <ClCompile Include="SM\action.cpp" />
+    <ClCompile Include="SM\actionnone.cpp" />
+    <ClCompile Include="SM\actionrandcolor.cpp" />
     <ClCompile Include="SM\conditionand.cpp" />
+    <ClCompile Include="SM\conditionmoving.cpp" />
     <ClCompile Include="SM\state.cpp" />
     <ClCompile Include="SM\statemachine.cpp" />
     <ClCompile Include="SM\transition.cpp" />
@@ -166,8 +168,11 @@
     <ClInclude Include="pathfollowing_steering.h" />
     <ClInclude Include="seek_steering.h" />
     <ClInclude Include="SM\action.h" />
+    <ClInclude Include="SM\actionnone.h" />
+    <ClInclude Include="SM\actionrandcolor.h" />
     <ClInclude Include="SM\condition.h" />
     <ClInclude Include="SM\conditionand.h" />
+    <ClInclude Include="SM\conditionmoving.h" />
     <ClInclude Include="SM\state.h" />
     <ClInclude Include="SM\statemachine.h" />
     <ClInclude Include="SM\transition.h" />

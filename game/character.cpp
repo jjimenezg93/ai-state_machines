@@ -1,15 +1,25 @@
 #include <stdafx.h>
 #include <tinyxml.h>
+
 #include "steering.h"
 #include "aligntomovement_steering.h"
 #include "seek_steering.h"
 #include "character.h"
+#include "params.h"
 #include "pathfollowing_steering.h"
 #include "pathfinding/pathfinder.h"
 #include "obstacleavoidance_steering.h"
 #include "obstaclepath_steering.h"
 
-#include <params.h>
+//State Machines
+#include "SM/statemachine.h"
+#include "SM/actionrandcolor.h"
+#include "SM/actionnone.h"
+#include "SM/state.h"
+#include "SM/conditionmoving.h"
+#include "SM/transition.h"
+
+bool gIsMoving = false;
 
 Character::Character(): mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f) {
 	RTTI_BEGIN
@@ -24,17 +34,26 @@ Character::~Character() {
 void Character::OnStart() {
 	ReadParams("params.xml", mParams);
 
-	Pathfinder::Instance();
-	FillPath();
-
 	mSteerings.push_back(new SeekSteering());
-	mSteerings.push_back(new ObstaclePathSteering());
 	for (std::vector<Steering*>::iterator it = mSteerings.begin(); it != mSteerings.end();
 	++it) {
 		(*it)->Init(this);
 	}
 	mTarget = mParams.target_position;
 	mArriveRadius = mParams.arrive_radius;
+
+	mStateMachine = new StateMachine();
+	//memory leak, just testing
+	State * defaultState = new State(new ActionRandColor(),
+		new ActionRandColor(), new ActionRandColor());
+	State * noneState = new State(new ActionNone(), new ActionNone(), new ActionNone());
+	mStateMachine->AddState(defaultState);
+	mStateMachine->SetCurrentState(defaultState);
+
+	ConditionMoving * moving = new ConditionMoving(gIsMoving);
+	Transition * transition = new Transition(moving, noneState, new ActionNone());
+	mStateMachine->GetCurrentState()->AddTransition(transition);
+	mStateMachine->Start();
 }
 
 void Character::FillPath() {
@@ -54,7 +73,10 @@ void Character::OnStop() {
 }
 
 void Character::OnUpdate(float step) {
-	FillPath();
+	gIsMoving = !gIsMoving;
+	mStateMachine->Update();
+
+
 	Accelerations acc;
 	for (std::vector<Steering *>::iterator itr = mSteerings.begin(); itr != mSteerings.end();
 	++itr) {
@@ -103,6 +125,9 @@ void Character::DrawDebug() {
 	gfxDevice.SetPenColor(0.0f, 0.0f, 1.0f, 0.5f);
 	MOAIDraw::DrawLine(static_cast<USVec2D>(GetLoc()),
 		static_cast<USVec2D>(GetLoc()) + mLastLinearAcc);
+
+	gfxDevice.SetPenColor(1.0f, 1.0f, 1.0f, 0.5f);
+	MOAIDraw::DrawPoint(mTarget.mX, mTarget.mY);
 }
 
 // Lua configuration

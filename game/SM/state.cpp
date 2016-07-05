@@ -12,7 +12,7 @@ m_enterAction(enter), m_updateAction(update), m_exitAction(exit) {
 }
 
 void State::OnEnter() {
-	m_enterAction->Run();
+	m_enterAction->Start();
 }
 
 void State::Update() {
@@ -20,7 +20,7 @@ void State::Update() {
 }
 
 void State::OnExit() {
-	m_exitAction->Run();
+	m_exitAction->End();
 }
 
 const std::vector<Transition *> & State::GetTransitions() const {

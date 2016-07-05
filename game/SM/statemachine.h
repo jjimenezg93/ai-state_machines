@@ -7,6 +7,10 @@ class StateMachine {
 public:
 	void AddState(State * newState);
 
+	void SetCurrentState(State * newCurrent);
+	State * GetCurrentState() const;
+
+	void Load();
 	void Start();
 	void Update();
 private:
