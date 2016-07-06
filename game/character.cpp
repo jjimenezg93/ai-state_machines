@@ -54,6 +54,7 @@ void Character::OnStart() {
 	Transition * transition = new Transition(moving, noneState, new ActionNone());
 	mStateMachine->GetCurrentState()->AddTransition(transition);
 	mStateMachine->Start();
+	//SetImage(2);
 }
 
 void Character::FillPath() {
@@ -75,7 +76,7 @@ void Character::OnStop() {
 void Character::OnUpdate(float step) {
 	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
-
+	SetImage(1);
 
 	Accelerations acc;
 	for (std::vector<Steering *>::iterator itr = mSteerings.begin(); itr != mSteerings.end();

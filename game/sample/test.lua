@@ -8,14 +8,25 @@ layer = MOAILayer2D.new()
 layer:setViewport(viewport)
 MOAISim.pushRenderPass(layer)
 
-texture_name = "ghost32.png"
-gfxQuad = MOAIGfxQuad2D.new()
-gfxQuad:setTexture(texture_name)
-gfxQuad:setRect(-16, -16, 16, 16)
-gfxQuad:setUVRect(0, 0, 1, 1)
+--Different textures
+tex = "dragon_idle.png"
+idleGfxQuad = MOAIGfxQuad2D.new()
+idleGfxQuad:setTexture(tex)
+idleGfxQuad:setRect(-32, -32, 32, 32)
+idleGfxQuad:setUVRect(0, 0, 1, 1)
+tex2 = "dragon_alarm.png"
+alarmGfxQuad = MOAIGfxQuad2D.new()
+alarmGfxQuad:setTexture(tex2)
+alarmGfxQuad:setRect(-32, -32, 32, 32)
+alarmGfxQuad:setUVRect(0, 0, 1, 1)
+tex3 = "dragon_windup.png"
+windupGfxQuad = MOAIGfxQuad2D.new()
+windupGfxQuad:setTexture(tex3)
+windupGfxQuad:setRect(-32, -32, 32, 32)
+windupGfxQuad:setUVRect(0, 0, 1, 1)
   
 prop = MOAIProp2D.new()
-prop:setDeck(gfxQuad)
+prop:setDeck(idleGfxQuad)
 
 entity = Character.new()
 -- Add prop to be the renderable for this character
@@ -25,7 +36,11 @@ entity:start()
 entity:setLoc(0, 0)
 entity:setRot(0)
 entity:setLinearVel(10, 20)
-entity:setAngularVel(30)
+--entity:setAngularVel(30)
+
+entity:addImage(idleGfxQuad)
+entity:addImage(alarmGfxQuad)
+entity:addImage(windupGfxQuad)
 
 -- Enable Debug Draw
 debug = MOAIDrawDebug.get();

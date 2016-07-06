@@ -1,6 +1,7 @@
 #ifndef _STATE_MACHINE_H
 #define _STATE_MACHINE_H
 
+class Character;
 class State;
 
 class StateMachine {
@@ -16,6 +17,8 @@ public:
 private:
 	std::vector<State *> m_states;
 	State * m_currentState;
+
+	Character * m_owner;
 };
 
 #endif//!_STATE_MACHINE_H
