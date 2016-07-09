@@ -50,6 +50,9 @@
     <ClCompile Include="SM\conditionmoving.cpp">
       <Filter>SM</Filter>
     </ClCompile>
+    <ClCompile Include="SM\actionchangeimage.cpp">
+      <Filter>SM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
@@ -102,6 +105,9 @@
       <Filter>SM</Filter>
     </ClInclude>
     <ClInclude Include="SM\conditionmoving.h">
+      <Filter>SM</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\actionchangeimage.h">
       <Filter>SM</Filter>
     </ClInclude>
   </ItemGroup>

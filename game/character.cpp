@@ -42,7 +42,7 @@ void Character::OnStart() {
 	mTarget = mParams.target_position;
 	mArriveRadius = mParams.arrive_radius;
 
-	mStateMachine = new StateMachine();
+	mStateMachine = new StateMachine(this);
 	//memory leak, just testing
 	State * defaultState = new State(new ActionRandColor(),
 		new ActionRandColor(), new ActionRandColor());
@@ -76,7 +76,7 @@ void Character::OnStop() {
 void Character::OnUpdate(float step) {
 	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
-	SetImage(1);
+	SetImage(2);
 
 	Accelerations acc;
 	for (std::vector<Steering *>::iterator itr = mSteerings.begin(); itr != mSteerings.end();

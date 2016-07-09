@@ -6,6 +6,8 @@ class State;
 
 class StateMachine {
 public:
+	StateMachine(Character * owner);
+
 	void AddState(State * newState);
 
 	void SetCurrentState(State * newCurrent);

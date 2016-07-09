@@ -139,6 +139,7 @@
     <ClCompile Include="pathfinding\pathfinder.cpp" />
     <ClCompile Include="pathfollowing_steering.cpp" />
     <ClCompile Include="seek_steering.cpp" />
+    <ClCompile Include="SM\actionchangeimage.cpp" />
     <ClCompile Include="SM\actionnone.cpp" />
     <ClCompile Include="SM\actionrandcolor.cpp" />
     <ClCompile Include="SM\conditionand.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="pathfollowing_steering.h" />
     <ClInclude Include="seek_steering.h" />
     <ClInclude Include="SM\action.h" />
+    <ClInclude Include="SM\actionchangeimage.h" />
     <ClInclude Include="SM\actionnone.h" />
     <ClInclude Include="SM\actionrandcolor.h" />
     <ClInclude Include="SM\condition.h" />

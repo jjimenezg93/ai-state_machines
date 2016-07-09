@@ -6,6 +6,12 @@
 
 #include <vector>
 
+enum ECharacterStates {
+	ECS_IDLE,
+	ECS_ALARM,
+	ECS_WINDUP
+};
+
 class Steering;
 class StateMachine;
 
