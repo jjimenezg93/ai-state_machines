@@ -3,15 +3,18 @@
 
 #include "action.h"
 
+class Character;
+
 class ActionChangeImage: public Action {
 public:
-	ActionChangeImage(unsigned char imageID);
+	ActionChangeImage(Character * character, unsigned char imageID);
 
-	virtual void Start(Character * character);
+	virtual void Start();
 	virtual void Run();
 	virtual void End();
 private:
 	unsigned char m_targetImage;
+	Character * m_character;
 };
 
 #endif

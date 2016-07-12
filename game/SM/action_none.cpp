@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "actionnone.h"
+#include "action_none.h"
 
 void ActionNone::Start() {
 	printf_s("Entering ActionNone\n");

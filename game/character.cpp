@@ -12,11 +12,15 @@
 #include "obstaclepath_steering.h"
 
 //State Machines
+#include "SM/action_alarm_delay.h"
+#include "SM/action_change_image.h"
+#include "SM/action_none.h"
+#include "SM/action_find_target.h"
+#include "SM/condition_and.h"
+#include "SM/condition_found_target.h"
+#include "SM/condition_not.h"
 #include "SM/statemachine.h"
-#include "SM/actionrandcolor.h"
-#include "SM/actionnone.h"
 #include "SM/state.h"
-#include "SM/conditionmoving.h"
 #include "SM/transition.h"
 
 bool gIsMoving = false;
@@ -43,18 +47,34 @@ void Character::OnStart() {
 	mArriveRadius = mParams.arrive_radius;
 
 	mStateMachine = new StateMachine(this);
-	//memory leak, just testing
-	State * defaultState = new State(new ActionRandColor(),
-		new ActionRandColor(), new ActionRandColor());
-	State * noneState = new State(new ActionNone(), new ActionNone(), new ActionNone());
-	mStateMachine->AddState(defaultState);
-	mStateMachine->SetCurrentState(defaultState);
+	State * idleState = new State();
+	/* DEALLOC ALL MEMORY OF SM, STATES, ACTIONS, CONDITIONS AND TRANSITIONS*/
+	//Actions
+	Action * aNone = new ActionNone();
+	Action * aChgImgToIdle = new ActionChangeImage(this, 0);
+	Action * aChgImgToAlarm = new ActionChangeImage(this, 1);
+	Action * aChgImgToWindUp = new ActionChangeImage(this, 2);
+	Action * aFindTarget = new ActionFindTarget(this);
+	Action * aAlarmDelay = new ActionAlarmDelay(2.f);
 
-	ConditionMoving * moving = new ConditionMoving(gIsMoving);
-	Transition * transition = new Transition(moving, noneState, new ActionNone());
-	mStateMachine->GetCurrentState()->AddTransition(transition);
+	State * sIdle = new State(aChgImgToIdle, aFindTarget, aNone);
+	State * sAlarm = new State(aChgImgToAlarm, aAlarmDelay, aNone);
+
+	Condition * cFoundTarget = new ConditionFoundTarget(this);
+	Condition * cNotFoundTarget = new ConditionNot(cFoundTarget);//should add some kind of return
+	//selection, so we could use cFoundTarget to enable&disable alarm state
+
+	Transition * tIdleAlarm = new Transition(cFoundTarget, sAlarm, aNone);
+	Transition * tAlarmIdle = new Transition(cNotFoundTarget, sIdle, aNone);
+	
+	sIdle->AddTransition(tIdleAlarm);
+	sAlarm->AddTransition(tAlarmIdle);
+
+	mStateMachine->AddState(sIdle);
+	mStateMachine->AddState(sAlarm);
+	
 	mStateMachine->Start();
-	//SetImage(2);
+	//SetImage(1);
 }
 
 void Character::FillPath() {
@@ -76,7 +96,7 @@ void Character::OnStop() {
 void Character::OnUpdate(float step) {
 	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
-	SetImage(2);
+	//SetImage(2);
 
 	Accelerations acc;
 	for (std::vector<Steering *>::iterator itr = mSteerings.begin(); itr != mSteerings.end();
@@ -139,6 +159,7 @@ void Character::RegisterLuaFuncs(MOAILuaState& state) {
 		{"setLinearVel", _setLinearVel},
 		{"setAngularVel", _setAngularVel},
 		{"setTarget", _setTarget},
+		{"setTargetActive", _setTargetActive},
 		{NULL, NULL}
 	};
 
@@ -167,6 +188,15 @@ int Character::_setTarget(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
 	self->mTarget = USVec2D(state.GetValue<float>(2, 0.0f), state.GetValue<float>(3, 0.0f));
+
+	return 0;
+}
+
+int Character::_setTargetActive(lua_State* L) {
+	MOAI_LUA_SETUP(Character, "U")
+
+		//self->SetIsTargetActive(state.GetValue<bool>(2, false));
+	self->SetIsTargetActive(!self->m_isTargetActive);
 
 	return 0;
 }

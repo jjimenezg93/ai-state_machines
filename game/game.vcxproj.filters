@@ -35,23 +35,29 @@
     <ClCompile Include="SM\transition.cpp">
       <Filter>SM</Filter>
     </ClCompile>
-    <ClCompile Include="SM\conditionand.cpp">
-      <Filter>SM</Filter>
-    </ClCompile>
     <ClCompile Include="SM\statemachine.cpp">
       <Filter>SM</Filter>
     </ClCompile>
-    <ClCompile Include="SM\actionnone.cpp">
-      <Filter>SM</Filter>
+    <ClCompile Include="SM\action_alarm_delay.cpp">
+      <Filter>SM\actions</Filter>
     </ClCompile>
-    <ClCompile Include="SM\actionrandcolor.cpp">
-      <Filter>SM</Filter>
+    <ClCompile Include="SM\action_change_image.cpp">
+      <Filter>SM\actions</Filter>
     </ClCompile>
-    <ClCompile Include="SM\conditionmoving.cpp">
-      <Filter>SM</Filter>
+    <ClCompile Include="SM\action_find_target.cpp">
+      <Filter>SM\actions</Filter>
     </ClCompile>
-    <ClCompile Include="SM\actionchangeimage.cpp">
-      <Filter>SM</Filter>
+    <ClCompile Include="SM\action_none.cpp">
+      <Filter>SM\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\condition_found_target.cpp">
+      <Filter>SM\conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\condition_and.cpp">
+      <Filter>SM\conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\condition_not.cpp">
+      <Filter>SM\conditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,35 +86,41 @@
     <ClInclude Include="aligntomovement_steering.h" />
     <ClInclude Include="seek_steering.h" />
     <ClInclude Include="align_steering.h" />
-    <ClInclude Include="SM\action.h">
-      <Filter>SM</Filter>
-    </ClInclude>
     <ClInclude Include="SM\state.h">
       <Filter>SM</Filter>
     </ClInclude>
     <ClInclude Include="SM\transition.h">
       <Filter>SM</Filter>
     </ClInclude>
-    <ClInclude Include="SM\condition.h">
-      <Filter>SM</Filter>
-    </ClInclude>
-    <ClInclude Include="SM\conditionand.h">
-      <Filter>SM</Filter>
-    </ClInclude>
     <ClInclude Include="SM\statemachine.h">
       <Filter>SM</Filter>
     </ClInclude>
-    <ClInclude Include="SM\actionnone.h">
-      <Filter>SM</Filter>
+    <ClInclude Include="SM\action.h">
+      <Filter>SM\actions</Filter>
     </ClInclude>
-    <ClInclude Include="SM\actionrandcolor.h">
-      <Filter>SM</Filter>
+    <ClInclude Include="SM\action_alarm_delay.h">
+      <Filter>SM\actions</Filter>
     </ClInclude>
-    <ClInclude Include="SM\conditionmoving.h">
-      <Filter>SM</Filter>
+    <ClInclude Include="SM\action_change_image.h">
+      <Filter>SM\actions</Filter>
     </ClInclude>
-    <ClInclude Include="SM\actionchangeimage.h">
-      <Filter>SM</Filter>
+    <ClInclude Include="SM\action_find_target.h">
+      <Filter>SM\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\action_none.h">
+      <Filter>SM\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\condition.h">
+      <Filter>SM\conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\condition_found_target.h">
+      <Filter>SM\conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\condition_and.h">
+      <Filter>SM\conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\condition_not.h">
+      <Filter>SM\conditions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +135,12 @@
     </Filter>
     <Filter Include="SM">
       <UniqueIdentifier>{82be0a1a-ff12-4853-8e5d-d02886700791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SM\actions">
+      <UniqueIdentifier>{8befa058-b117-4808-b853-c0dc590486f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SM\conditions">
+      <UniqueIdentifier>{8bf0b530-fa1c-4e5a-a4da-54e1725d692e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

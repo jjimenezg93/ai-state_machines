@@ -5,12 +5,16 @@
 #include "action.h"
 #include "transition.h"
 
-StateMachine::StateMachine(Character * owner): m_owner(owner) {}
+StateMachine::StateMachine(Character * owner): m_owner(owner), m_currentState(nullptr) {}
 
 //would be used to load state machine's from file
 void StateMachine::Load() {}
 
-void StateMachine::Start() {}
+void StateMachine::Start() {
+	if (!m_currentState && !m_states.empty()) {
+		m_currentState = m_states.at(0);
+	}
+}
 
 void StateMachine::Update() {
 	if (m_currentState) {

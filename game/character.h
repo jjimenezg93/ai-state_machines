@@ -43,6 +43,9 @@ public:
 	float GetArriveRadius() const { return mArriveRadius; }
 
 	Params &GetParams() { return mParams; }
+
+	bool IsTargetActive() const { return m_isTargetActive; }
+	void SetIsTargetActive(bool value) { m_isTargetActive = value; }
 private:
 	void FillPath();
 
@@ -58,6 +61,8 @@ private:
 
 	StateMachine * mStateMachine;
 
+	bool m_isTargetActive;
+
 	// Lua configuration
 public:
 	virtual void RegisterLuaFuncs(MOAILuaState& state);
@@ -65,6 +70,7 @@ private:
 	static int _setLinearVel(lua_State* L);
 	static int _setAngularVel(lua_State* L);
 	static int _setTarget(lua_State* L);
+	static int _setTargetActive(lua_State* L);
 };
 
 #endif

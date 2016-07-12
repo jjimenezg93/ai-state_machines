@@ -37,6 +37,7 @@ entity:setLoc(0, 0)
 entity:setRot(0)
 entity:setLinearVel(10, 20)
 --entity:setAngularVel(30)
+entity:setTargetActive(false)
 
 entity:addImage(idleGfxQuad)
 entity:addImage(alarmGfxQuad)
@@ -52,12 +53,16 @@ mouseX = 0
 mouseY = 0
 
 function onClick(down)
-  entity:setLoc(mouseX, mouseY)
+	entity:setLoc(mouseX, mouseY)
 end
 
 function onRightClick(down)
-  entity:setTarget(mouseX, mouseY)
+	entity:setTargetActive()
 end
+
+--[[function onRightClick(up)
+	entity:setTargetActive(false)
+end--]]
 
 function pointerCallback(x, y)
     mouseX, mouseY = layer:wndToWorld(x, y)

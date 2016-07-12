@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "conditionand.h"
+#include "condition_and.h"
 
 ConditionAnd::ConditionAnd(Condition * first, Condition * second):
 m_firstCondition(first), m_secondCondition(second) {}
