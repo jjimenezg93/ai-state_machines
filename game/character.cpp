@@ -23,6 +23,8 @@
 #include "SM/state.h"
 #include "SM/transition.h"
 
+#define INPUT_MIN_TIME 0.2f
+
 bool gIsMoving = false;
 
 Character::Character(): mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f) {
@@ -35,6 +37,8 @@ Character::~Character() {
 
 }
 
+
+
 void Character::OnStart() {
 	ReadParams("params.xml", mParams);
 
@@ -45,6 +49,8 @@ void Character::OnStart() {
 	}
 	mTarget = mParams.target_position;
 	mArriveRadius = mParams.arrive_radius;
+
+	mLastInputTime = 0.f;
 
 	mStateMachine = new StateMachine(this);
 	State * idleState = new State();
@@ -59,6 +65,7 @@ void Character::OnStart() {
 
 	State * sIdle = new State(aChgImgToIdle, aFindTarget, aNone);
 	State * sAlarm = new State(aChgImgToAlarm, aAlarmDelay, aNone);
+	//State * sWindup = new State(aChgImgToWindUp, aFindTarget, aNone);
 
 	Condition * cFoundTarget = new ConditionFoundTarget(this);
 	Condition * cNotFoundTarget = new ConditionNot(cFoundTarget);//should add some kind of return
@@ -94,6 +101,8 @@ void Character::OnStop() {
 }
 
 void Character::OnUpdate(float step) {
+	mLastInputTime += step;
+
 	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
 	//SetImage(2);
@@ -178,7 +187,7 @@ int Character::_setLinearVel(lua_State* L) {
 int Character::_setAngularVel(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-		float angle = state.GetValue<float>(2, 0.0f);
+	float angle = state.GetValue<float>(2, 0.0f);
 	self->SetAngularVelocity(angle);
 
 	return 0;
@@ -195,8 +204,10 @@ int Character::_setTarget(lua_State* L) {
 int Character::_setTargetActive(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-		//self->SetIsTargetActive(state.GetValue<bool>(2, false));
-	self->SetIsTargetActive(!self->m_isTargetActive);
+	if (self->mLastInputTime >= INPUT_MIN_TIME) {
+		self->SetIsTargetActive(!self->mIsTargetActive);
+		self->mLastInputTime = 0.f;
+	}
 
 	return 0;
 }

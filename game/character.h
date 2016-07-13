@@ -44,8 +44,8 @@ public:
 
 	Params &GetParams() { return mParams; }
 
-	bool IsTargetActive() const { return m_isTargetActive; }
-	void SetIsTargetActive(bool value) { m_isTargetActive = value; }
+	bool IsTargetActive() const { return mIsTargetActive; }
+	void SetIsTargetActive(bool value) { mIsTargetActive = value; }
 private:
 	void FillPath();
 
@@ -61,7 +61,9 @@ private:
 
 	StateMachine * mStateMachine;
 
-	bool m_isTargetActive;
+	bool mIsTargetActive;
+
+	float mLastInputTime;
 
 	// Lua configuration
 public:
