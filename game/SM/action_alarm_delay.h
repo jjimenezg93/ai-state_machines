@@ -3,9 +3,11 @@
 
 #include "action.h"
 
+class Character;
+
 class ActionAlarmDelay: public Action {
 public:
-	ActionAlarmDelay(float delay);
+	ActionAlarmDelay(Character * character, float delay);
 
 	virtual void Start();
 	virtual void Run();
@@ -13,6 +15,8 @@ public:
 private:
 	float m_currentDelay, m_desiredDelay;
 	time_t m_startTime;
+
+	Character * m_character;
 };
 
 #endif//!_ACTION_ALARM_DELAY_H

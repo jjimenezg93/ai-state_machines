@@ -12,15 +12,20 @@ m_enterAction(enter), m_updateAction(update), m_exitAction(exit) {
 }
 
 void State::OnEnter() {
-	m_enterAction->Start();
+	if (m_enterAction)
+		m_enterAction->Start();
+	if (m_updateAction)
+		m_updateAction->Start();
 }
 
 void State::Update() {
-	m_updateAction->Run();
+	if (m_updateAction)
+		m_updateAction->Run();
 }
 
 void State::OnExit() {
-	m_exitAction->End();
+	if (m_exitAction)
+		m_exitAction->End();
 }
 
 const std::vector<Transition *> & State::GetTransitions() const {

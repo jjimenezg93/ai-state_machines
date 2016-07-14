@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="aligntomovement_steering.cpp" />
     <ClCompile Include="align_steering.cpp" />
+    <ClCompile Include="arrive_steering.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="grid.cpp" />
@@ -142,9 +143,11 @@
     <ClCompile Include="SM\action_alarm_delay.cpp" />
     <ClCompile Include="SM\action_change_image.cpp" />
     <ClCompile Include="SM\action_find_target.cpp" />
+    <ClCompile Include="SM\action_follow_target.cpp" />
     <ClCompile Include="SM\action_none.cpp" />
     <ClCompile Include="SM\condition_and.cpp" />
     <ClCompile Include="SM\condition_found_target.cpp" />
+    <ClCompile Include="SM\condition_has_reached.cpp" />
     <ClCompile Include="SM\condition_not.cpp" />
     <ClCompile Include="SM\state.cpp" />
     <ClCompile Include="SM\statemachine.cpp" />
@@ -157,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="aligntomovement_steering.h" />
     <ClInclude Include="align_steering.h" />
+    <ClInclude Include="arrive_steering.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="grid.h" />
@@ -173,11 +177,13 @@
     <ClInclude Include="SM\action.h" />
     <ClInclude Include="SM\action_alarm_delay.h" />
     <ClInclude Include="SM\action_change_image.h" />
+    <ClInclude Include="SM\action_follow_target.h" />
     <ClInclude Include="SM\action_none.h" />
     <ClInclude Include="SM\condition.h" />
     <ClInclude Include="SM\condition_and.h" />
     <ClInclude Include="SM\action_find_target.h" />
     <ClInclude Include="SM\condition_found_target.h" />
+    <ClInclude Include="SM\condition_has_reached.h" />
     <ClInclude Include="SM\condition_not.h" />
     <ClInclude Include="SM\state.h" />
     <ClInclude Include="SM\statemachine.h" />

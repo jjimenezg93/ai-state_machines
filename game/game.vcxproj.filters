@@ -59,6 +59,13 @@
     <ClCompile Include="SM\condition_not.cpp">
       <Filter>SM\conditions</Filter>
     </ClCompile>
+    <ClCompile Include="SM\action_follow_target.cpp">
+      <Filter>SM\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="SM\condition_has_reached.cpp">
+      <Filter>SM\conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="arrive_steering.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
@@ -122,6 +129,13 @@
     <ClInclude Include="SM\condition_not.h">
       <Filter>SM\conditions</Filter>
     </ClInclude>
+    <ClInclude Include="SM\action_follow_target.h">
+      <Filter>SM\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="SM\condition_has_reached.h">
+      <Filter>SM\conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="arrive_steering.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="host">

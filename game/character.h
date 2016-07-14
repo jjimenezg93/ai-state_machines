@@ -45,7 +45,11 @@ public:
 	Params &GetParams() { return mParams; }
 
 	bool IsTargetActive() const { return mIsTargetActive; }
-	void SetIsTargetActive(bool value) { mIsTargetActive = value; }
+	//also sets if can move
+	void SetIsTargetActive(bool value) { mIsTargetActive = value; mCanMove = value; }
+
+	bool CanMove() const { return mCanMove; }
+	void SetCanMove(bool value) { mCanMove = value; }
 private:
 	void FillPath();
 
@@ -62,6 +66,7 @@ private:
 	StateMachine * mStateMachine;
 
 	bool mIsTargetActive;
+	bool mCanMove;
 
 	float mLastInputTime;
 

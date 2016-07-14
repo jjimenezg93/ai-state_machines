@@ -3,8 +3,8 @@
 		<max_velocity value="50"> </max_velocity>
 		<max_acceleration value="100"> </max_acceleration>
 		<dest_radius value="40"> </dest_radius>
-        <arrive_radius value="140"> </arrive_radius>
-		<targetPosition x="0" y="0"> </targetPosition>
+        <arrive_radius value="120"> </arrive_radius>
+		<targetPosition x="100" y="100"> </targetPosition>
         
 		<max_angular_velocity value="80"> </max_angular_velocity>
 		<max_angular_acceleration value="100"> </max_angular_acceleration>

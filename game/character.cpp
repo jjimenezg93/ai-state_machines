@@ -3,6 +3,7 @@
 
 #include "steering.h"
 #include "aligntomovement_steering.h"
+#include "arrive_steering.h"
 #include "seek_steering.h"
 #include "character.h"
 #include "params.h"
@@ -18,6 +19,7 @@
 #include "SM/action_find_target.h"
 #include "SM/condition_and.h"
 #include "SM/condition_found_target.h"
+#include "SM/condition_has_reached.h"
 #include "SM/condition_not.h"
 #include "SM/statemachine.h"
 #include "SM/state.h"
@@ -37,12 +39,11 @@ Character::~Character() {
 
 }
 
-
-
 void Character::OnStart() {
 	ReadParams("params.xml", mParams);
 
-	mSteerings.push_back(new SeekSteering());
+	//mSteerings.push_back(new SeekSteering());
+	mSteerings.push_back(new ArriveSteering());
 	for (std::vector<Steering*>::iterator it = mSteerings.begin(); it != mSteerings.end();
 	++it) {
 		(*it)->Init(this);
@@ -51,6 +52,8 @@ void Character::OnStart() {
 	mArriveRadius = mParams.arrive_radius;
 
 	mLastInputTime = 0.f;
+	mCanMove = false;
+	mIsTargetActive = false;
 
 	mStateMachine = new StateMachine(this);
 	State * idleState = new State();
@@ -61,27 +64,33 @@ void Character::OnStart() {
 	Action * aChgImgToAlarm = new ActionChangeImage(this, 1);
 	Action * aChgImgToWindUp = new ActionChangeImage(this, 2);
 	Action * aFindTarget = new ActionFindTarget(this);
-	Action * aAlarmDelay = new ActionAlarmDelay(2.f);
+	Action * aAlarmDelay = new ActionAlarmDelay(this, 2.f);
 
+	//States
 	State * sIdle = new State(aChgImgToIdle, aFindTarget, aNone);
 	State * sAlarm = new State(aChgImgToAlarm, aAlarmDelay, aNone);
 	//State * sWindup = new State(aChgImgToWindUp, aFindTarget, aNone);
 
+	//Conditions
 	Condition * cFoundTarget = new ConditionFoundTarget(this);
 	Condition * cNotFoundTarget = new ConditionNot(cFoundTarget);//should add some kind of return
 	//selection, so we could use cFoundTarget to enable&disable alarm state
+	Condition * cHasReached = new ConditionHasReached(this, mTarget);
 
+	//Transitions
 	Transition * tIdleAlarm = new Transition(cFoundTarget, sAlarm, aNone);
-	Transition * tAlarmIdle = new Transition(cNotFoundTarget, sIdle, aNone);
+	Transition * tAlarmIdle = new Transition(cHasReached, sIdle, aNone);
 	
+	//SM initialization
 	sIdle->AddTransition(tIdleAlarm);
 	sAlarm->AddTransition(tAlarmIdle);
 
 	mStateMachine->AddState(sIdle);
 	mStateMachine->AddState(sAlarm);
 	
+	mStateMachine->SetCurrentState(sIdle);
+
 	mStateMachine->Start();
-	//SetImage(1);
 }
 
 void Character::FillPath() {
@@ -105,7 +114,6 @@ void Character::OnUpdate(float step) {
 
 	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
-	//SetImage(2);
 
 	Accelerations acc;
 	for (std::vector<Steering *>::iterator itr = mSteerings.begin(); itr != mSteerings.end();
