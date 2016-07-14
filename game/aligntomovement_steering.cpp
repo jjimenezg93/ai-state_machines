@@ -19,18 +19,20 @@ void AlignToMovementSteering::Init(Character * ch) {
 //45deg of img offset
 void AlignToMovementSteering::Update(Accelerations &acc, USVec2D target) {
 	Character * ch = GetCh();
+	if (ch->CanMove()) {
+		USVec2D direction = ch->GetLinearVelocity();
+		if (direction.Length() != 0.f) {
+			direction.Norm();
+			float wishAngVel = 0;
+			if (direction.mX != 0) {
+				wishAngVel = atan2f(direction.mY, direction.mX) * RAD2DEG;
+			}
+			Params &par = ch->GetParams();
+			par.target_rotation = wishAngVel;
+		}
 
-	USVec2D direction = ch->GetLinearVelocity();
-	direction.Norm();
-
-	float wishAngVel = 0;
-	if (direction.mX != 0) {
-		wishAngVel = atan2f(direction.mY, direction.mX) * RAD2DEG;
+		mAlignSteering->Update(acc, target);
 	}
-	Params &par = ch->GetParams();
-	par.target_rotation = wishAngVel;
-
-	mAlignSteering->Update(acc, target);
 }
 
 void AlignToMovementSteering::DrawDebug() {

@@ -17,7 +17,9 @@
 #include "SM/action_change_image.h"
 #include "SM/action_none.h"
 #include "SM/action_find_target.h"
+#include "SM/action_follow_target.h"
 #include "SM/condition_and.h"
+#include "SM/condition_can_move.h"
 #include "SM/condition_found_target.h"
 #include "SM/condition_has_reached.h"
 #include "SM/condition_not.h"
@@ -44,6 +46,7 @@ void Character::OnStart() {
 
 	//mSteerings.push_back(new SeekSteering());
 	mSteerings.push_back(new ArriveSteering());
+	mSteerings.push_back(new AlignToMovementSteering());
 	for (std::vector<Steering*>::iterator it = mSteerings.begin(); it != mSteerings.end();
 	++it) {
 		(*it)->Init(this);
@@ -65,28 +68,35 @@ void Character::OnStart() {
 	Action * aChgImgToWindUp = new ActionChangeImage(this, 2);
 	Action * aFindTarget = new ActionFindTarget(this);
 	Action * aAlarmDelay = new ActionAlarmDelay(this, 2.f);
+	Action * aFollowTarget = new ActionFollowTarget(this);
 
 	//States
 	State * sIdle = new State(aChgImgToIdle, aFindTarget, aNone);
 	State * sAlarm = new State(aChgImgToAlarm, aAlarmDelay, aNone);
-	//State * sWindup = new State(aChgImgToWindUp, aFindTarget, aNone);
+	State * sFollowing = new State(aChgImgToWindUp, aFollowTarget, aNone);
 
 	//Conditions
 	Condition * cFoundTarget = new ConditionFoundTarget(this);
 	Condition * cNotFoundTarget = new ConditionNot(cFoundTarget);//should add some kind of return
 	//selection, so we could use cFoundTarget to enable&disable alarm state
 	Condition * cHasReached = new ConditionHasReached(this, mTarget);
+	Condition * cCanMove = new ConditionCanMove(this);
 
 	//Transitions
 	Transition * tIdleAlarm = new Transition(cFoundTarget, sAlarm, aNone);
 	Transition * tAlarmIdle = new Transition(cHasReached, sIdle, aNone);
+	Transition * tAlarmFollow = new Transition(cCanMove, sFollowing, aNone);
+	Transition * tFollowIdle = new Transition(cHasReached, sIdle, aNone);
 	
 	//SM initialization
 	sIdle->AddTransition(tIdleAlarm);
 	sAlarm->AddTransition(tAlarmIdle);
+	sAlarm->AddTransition(tAlarmFollow);
+	sFollowing->AddTransition(tFollowIdle);
 
 	mStateMachine->AddState(sIdle);
 	mStateMachine->AddState(sAlarm);
+	mStateMachine->AddState(sFollowing);
 	
 	mStateMachine->SetCurrentState(sIdle);
 

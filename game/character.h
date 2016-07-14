@@ -46,7 +46,7 @@ public:
 
 	bool IsTargetActive() const { return mIsTargetActive; }
 	//also sets if can move
-	void SetIsTargetActive(bool value) { mIsTargetActive = value; mCanMove = value; }
+	void SetIsTargetActive(bool value) { mIsTargetActive = value; }
 
 	bool CanMove() const { return mCanMove; }
 	void SetCanMove(bool value) { mCanMove = value; }

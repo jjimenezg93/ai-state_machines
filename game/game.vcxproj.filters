@@ -66,6 +66,9 @@
       <Filter>SM\conditions</Filter>
     </ClCompile>
     <ClCompile Include="arrive_steering.cpp" />
+    <ClCompile Include="SM\condition_can_move.cpp">
+      <Filter>SM\conditions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
@@ -136,6 +139,9 @@
       <Filter>SM\conditions</Filter>
     </ClInclude>
     <ClInclude Include="arrive_steering.h" />
+    <ClInclude Include="SM\condition_can_move.h">
+      <Filter>SM\conditions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="host">

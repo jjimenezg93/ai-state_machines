@@ -37,7 +37,6 @@ entity:setLoc(0, 0)
 entity:setRot(0)
 --entity:setLinearVel(10, 20)
 --entity:setAngularVel(30)
---entity:setTargetActive(false)
 
 entity:addImage(idleGfxQuad)
 entity:addImage(alarmGfxQuad)

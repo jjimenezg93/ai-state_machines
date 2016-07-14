@@ -6,6 +6,7 @@ ActionFollowTarget::ActionFollowTarget(Character * character): m_character(chara
 
 void ActionFollowTarget::Start() {}
 
-void ActionFollowTarget::Run() {}
+void ActionFollowTarget::Run() {}//this actually does nothing since movement is handled by
+//ArriveSteering
 
 void ActionFollowTarget::End() {}

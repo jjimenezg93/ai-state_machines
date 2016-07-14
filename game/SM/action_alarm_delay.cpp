@@ -3,8 +3,8 @@
 #include "action_alarm_delay.h"
 #include "character.h"
 
-ActionAlarmDelay::ActionAlarmDelay(Character * character, float delay): m_character(character),
-m_desiredDelay(delay), m_currentDelay(0.f) {}
+ActionAlarmDelay::ActionAlarmDelay(Character * character, double delay): m_character(character),
+m_desiredDelay(delay) {}
 
 void ActionAlarmDelay::Start() {
 	m_startTime = std::time(nullptr);
