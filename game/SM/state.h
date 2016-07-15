@@ -10,6 +10,7 @@ class State {
 public:
 	State();
 	State(Action * enter, Action * update, Action * exit);
+	~State();
 
 	void OnEnter();
 	void Update();

@@ -7,6 +7,15 @@
 
 StateMachine::StateMachine(Character * owner): m_owner(owner), m_currentState(nullptr) {}
 
+StateMachine::~StateMachine() {
+	std::vector<State *>::iterator delItr = m_states.begin();
+	while (delItr != m_states.end()) {
+		delete *delItr;
+		delItr++;
+	}
+	m_states.clear();
+}
+
 //would be used to load state machine's from file
 void StateMachine::Load() {}
 

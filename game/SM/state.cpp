@@ -7,8 +7,17 @@
 State::State() {}
 
 State::State(Action * enter, Action * update, Action * exit):
-m_enterAction(enter), m_updateAction(update), m_exitAction(exit) {
+	m_enterAction(enter), m_updateAction(update), m_exitAction(exit) {
 
+}
+
+State::~State() {
+	std::vector<Transition *>::iterator delItr = m_transitions.begin();
+	while (delItr != m_transitions.end()) {
+		delete *delItr;
+		delItr++;
+	}
+	m_transitions.clear();
 }
 
 void State::OnEnter() {

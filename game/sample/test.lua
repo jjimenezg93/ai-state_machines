@@ -67,17 +67,3 @@ end
 MOAIInputMgr.device.mouseLeft:setCallback(onClick)
 MOAIInputMgr.device.mouseRight:setCallback(onRightClick)
 MOAIInputMgr.device.pointer:setCallback(pointerCallback)
-
-function onKeyPressed(key, down)
-	if key == 32 then
-		if down then
-			print(tostring(key))
-		else
-			pathfinder:pathfindStep()
-		end
-	end
-end
-
-if (MOAIInputMgr.device.keyboard) then
-    MOAIInputMgr.device.keyboard:setCallback(onKeyPressed)
-end

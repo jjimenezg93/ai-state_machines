@@ -29,22 +29,42 @@
 
 #define INPUT_MIN_TIME 0.2f
 
-bool gIsMoving = false;
+std::vector<Action *> actions;
+std::vector<Condition *> conditions;
+//actions and conditions are not freed inside SM's, states or transitions because
+//they are more likely to be shared by some of them and even between multiple SM's than the rest
 
-Character::Character(): mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f) {
+
+Character::Character(): mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f),
+mStateMachine(nullptr) {
 	RTTI_BEGIN
 		RTTI_EXTEND(MOAIEntity2D)
 	RTTI_END
 }
 
 Character::~Character() {
+	if (mStateMachine != nullptr) {
+		delete mStateMachine;
 
+		std::vector<Action *>::iterator delActItr = actions.begin();
+		while (delActItr != actions.end()) {
+			delete *delActItr;
+			delActItr++;
+		}
+		actions.clear();
+
+		std::vector<Condition *>::iterator delCondItr = conditions.begin();
+		while (delCondItr != conditions.end()) {
+			delete *delCondItr;
+			delCondItr++;
+		}
+		conditions.clear();
+	}
 }
 
 void Character::OnStart() {
 	ReadParams("params.xml", mParams);
 
-	//mSteerings.push_back(new SeekSteering());
 	mSteerings.push_back(new ArriveSteering());
 	mSteerings.push_back(new AlignToMovementSteering());
 	for (std::vector<Steering*>::iterator it = mSteerings.begin(); it != mSteerings.end();
@@ -59,35 +79,45 @@ void Character::OnStart() {
 	mIsTargetActive = false;
 
 	mStateMachine = new StateMachine(this);
-	State * idleState = new State();
-	/* DEALLOC ALL MEMORY OF SM, STATES, ACTIONS, CONDITIONS AND TRANSITIONS*/
+
 	//Actions
 	Action * aNone = new ActionNone();
+	actions.push_back(aNone);
 	Action * aChgImgToIdle = new ActionChangeImage(this, 0);
+	actions.push_back(aChgImgToIdle);
 	Action * aChgImgToAlarm = new ActionChangeImage(this, 1);
-	Action * aChgImgToWindUp = new ActionChangeImage(this, 2);
+	actions.push_back(aChgImgToAlarm);
+	Action * aChgImgToFollowing = new ActionChangeImage(this, 2);
+	actions.push_back(aChgImgToFollowing);
 	Action * aFindTarget = new ActionFindTarget(this);
+	actions.push_back(aFindTarget);
 	Action * aAlarmDelay = new ActionAlarmDelay(this, 2.f);
+	actions.push_back(aAlarmDelay);
 	Action * aFollowTarget = new ActionFollowTarget(this);
+	actions.push_back(aFollowTarget);
 
 	//States
 	State * sIdle = new State(aChgImgToIdle, aFindTarget, aNone);
 	State * sAlarm = new State(aChgImgToAlarm, aAlarmDelay, aNone);
-	State * sFollowing = new State(aChgImgToWindUp, aFollowTarget, aNone);
+	State * sFollowing = new State(aChgImgToFollowing, aFollowTarget, aNone);
 
 	//Conditions
 	Condition * cFoundTarget = new ConditionFoundTarget(this);
+	conditions.push_back(cFoundTarget);
 	Condition * cNotFoundTarget = new ConditionNot(cFoundTarget);//should add some kind of return
 	//selection, so we could use cFoundTarget to enable&disable alarm state
+	conditions.push_back(cNotFoundTarget);
 	Condition * cHasReached = new ConditionHasReached(this, mTarget);
+	conditions.push_back(cHasReached);
 	Condition * cCanMove = new ConditionCanMove(this);
+	conditions.push_back(cCanMove);
 
 	//Transitions
 	Transition * tIdleAlarm = new Transition(cFoundTarget, sAlarm, aNone);
 	Transition * tAlarmIdle = new Transition(cHasReached, sIdle, aNone);
 	Transition * tAlarmFollow = new Transition(cCanMove, sFollowing, aNone);
 	Transition * tFollowIdle = new Transition(cHasReached, sIdle, aNone);
-	
+
 	//SM initialization
 	sIdle->AddTransition(tIdleAlarm);
 	sAlarm->AddTransition(tAlarmIdle);
@@ -97,7 +127,7 @@ void Character::OnStart() {
 	mStateMachine->AddState(sIdle);
 	mStateMachine->AddState(sAlarm);
 	mStateMachine->AddState(sFollowing);
-	
+
 	mStateMachine->SetCurrentState(sIdle);
 
 	mStateMachine->Start();
@@ -122,7 +152,6 @@ void Character::OnStop() {
 void Character::OnUpdate(float step) {
 	mLastInputTime += step;
 
-	gIsMoving = !gIsMoving;
 	mStateMachine->Update();
 
 	Accelerations acc;
@@ -196,7 +225,7 @@ void Character::RegisterLuaFuncs(MOAILuaState& state) {
 int Character::_setLinearVel(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-	float pX = state.GetValue<float>(2, 0.0f);
+		float pX = state.GetValue<float>(2, 0.0f);
 	float pY = state.GetValue<float>(3, 0.0f);
 	self->SetLinearVelocity(pX, pY);
 	return 0;
@@ -205,7 +234,7 @@ int Character::_setLinearVel(lua_State* L) {
 int Character::_setAngularVel(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-	float angle = state.GetValue<float>(2, 0.0f);
+		float angle = state.GetValue<float>(2, 0.0f);
 	self->SetAngularVelocity(angle);
 
 	return 0;
@@ -214,7 +243,7 @@ int Character::_setAngularVel(lua_State* L) {
 int Character::_setTarget(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-	self->mTarget = USVec2D(state.GetValue<float>(2, 0.0f), state.GetValue<float>(3, 0.0f));
+		self->mTarget = USVec2D(state.GetValue<float>(2, 0.0f), state.GetValue<float>(3, 0.0f));
 
 	return 0;
 }
@@ -222,10 +251,10 @@ int Character::_setTarget(lua_State* L) {
 int Character::_setTargetActive(lua_State* L) {
 	MOAI_LUA_SETUP(Character, "U")
 
-	if (self->mLastInputTime >= INPUT_MIN_TIME) {
-		self->SetIsTargetActive(!self->mIsTargetActive);
-		self->mLastInputTime = 0.f;
-	}
+		if (self->mLastInputTime >= INPUT_MIN_TIME) {
+			self->SetIsTargetActive(!self->mIsTargetActive);
+			self->mLastInputTime = 0.f;
+		}
 
 	return 0;
 }

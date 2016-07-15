@@ -8,9 +8,7 @@
 Transition::Transition(Condition * condition, State * targetState, Action * action):
 m_condition(condition), m_targetState(targetState), m_triggerAction(action) {}
 
-Transition::~Transition() {
-
-}
+Transition::~Transition() {}
 
 bool Transition::CanTrigger() const {
 	return m_condition->Check();

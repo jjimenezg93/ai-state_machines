@@ -7,6 +7,7 @@ class State;
 class StateMachine {
 public:
 	StateMachine(Character * owner);
+	~StateMachine();
 
 	void AddState(State * newState);
 
