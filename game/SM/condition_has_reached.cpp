@@ -11,9 +11,10 @@ m_character(character), m_targetPosition(position) {}
 bool ConditionHasReached::Check() const {
 	USVec2D currPos = m_character->GetLoc();
 	if ((currPos - m_targetPosition).Length() <= ARRIVE_EPSILON) {
+		//hotfix. This shouldn't be done here
 		m_character->SetCanMove(false);
-		m_character->SetIsTargetActive(false);//should it be here or in another action/trans?
-		m_character->SetLinearVelocity(0.f, 0.f);//hotfix. This shouldn't be done here
+		m_character->SetIsTargetActive(false);
+		m_character->SetLinearVelocity(0.f, 0.f);
 		return true;
 	}
 	return false;
